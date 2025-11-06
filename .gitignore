@@ -46,3 +46,12 @@ app.*.map.json
 
 # Env file.
 .env
+
+# Generated files
+**/*.g.dart
+**/*.freezed.dart
+**/*.gr.dart
+**/*.config.dart
+
+# Just for me.
+readme/
