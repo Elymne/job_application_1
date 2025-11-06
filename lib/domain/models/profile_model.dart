@@ -11,9 +11,6 @@ abstract class ProfileModel with _$ProfileModel {
     required String firstname,
     required String surname,
     required String profileImagePath,
-
-    // Devrais-être stocké sur le tel, et pas sur la db en remote mais tant pis.
-    required String isNotifActivated,
   }) = _ProfileModel;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => _$ProfileModelFromJson(json);

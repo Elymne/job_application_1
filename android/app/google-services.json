@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "499009956911",
+    "project_id": "job-application-d1d1",
+    "storage_bucket": "job-application-d1d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499009956911:android:4c604b8d404c3bb2412ada",
+        "android_client_info": {
+          "package_name": "com.example.naxan_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9M0AQxxB2j9OifhFLN2usdPfl6R5p2TM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
