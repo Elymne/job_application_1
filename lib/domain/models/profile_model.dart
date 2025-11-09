@@ -10,8 +10,9 @@ abstract class ProfileModel with _$ProfileModel {
     required String email,
     required String firstname,
     required String surname,
-    required String profileImagePath,
+    required String imageId,
   }) = _ProfileModel;
 
-  factory ProfileModel.fromJson(Map<String, dynamic> json) => _$ProfileModelFromJson(json);
+  factory ProfileModel.fromJson(Map<String, dynamic> json) =>
+      _$ProfileModelFromJson(json);
 }

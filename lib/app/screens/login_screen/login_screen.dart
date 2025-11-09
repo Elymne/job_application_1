@@ -1,14 +1,10 @@
-import 'package:auto_route/annotations.dart';
-import 'package:flutter/material.dart';
+import 'package:naxan_test/app/screens/login_screen/login_notifier.dart';
+import 'package:naxan_test/app/screens/login_screen/reset_password_notifier.dart';
+import 'package:naxan_test/app/modals/modal_reset.dart';
+import 'package:naxan_test/app/modals/simple_modal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naxan_test/app/screens/login_screen/modal_login_failure.dart';
-import 'package:naxan_test/app/screens/login_screen/modal_reset.dart';
-import 'package:naxan_test/app/screens/login_screen/modal_reset_failure.dart';
-import 'package:naxan_test/app/screens/login_screen/modal_reset_success.dart';
-import 'package:naxan_test/app/screens/login_screen/states/login_notifier.dart';
-import 'package:naxan_test/app/screens/login_screen/states/reset.dart';
-import 'package:naxan_test/app/screens/login_screen/states/reset_notifier.dart';
-import 'package:naxan_test/core/themes/custom_color.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 
 @RoutePage()
 class LoginScreen extends ConsumerStatefulWidget {
@@ -20,43 +16,44 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _State extends ConsumerState<LoginScreen> {
   late final _loginNotifier = ref.read(loginNotifierProvider.notifier);
-  late final _resetNotifier = ref.read(resetNotifierProvider.notifier);
+  late final _resetNotifier = ref.read(resetPasswordNotifierProvider.notifier);
 
   @override
   Widget build(BuildContext context) {
-    final topPadding = MediaQuery.of(context).size.height * 0.1;
+    final theme = Theme.of(context);
 
-    // * Login state management.
-    ref.listen(loginNotifierProvider, (previous, next) {
-      if (next.asData?.value.status == LoginStatus.success) {
-        // Next screen.
-        return;
-      }
-
-      if (next.asData?.value.status == LoginStatus.failure) {
-        showModalLoginFailure(
-          context,
-          next.asData?.value.errorMessage ?? "Erreur inconnue",
-        );
-        return;
-      }
+    // * Ecouteur: Auth.
+    ref.listen(loginNotifierProvider.selectAsync((state) => state.success), (previous, next) async {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        AutoRouter.of(context).replacePath('/home');
+      });
     });
 
-    // * Reset state management.
-    ref.listen(resetNotifierProvider, (previous, next) {
-      if (next.asData?.value.state == ResetState.success) {
-        Navigator.of(context).pop();
-        _resetNotifier.reset();
-        showModalResetSuccess(context);
-        return;
-      }
+    // * Ecouteur: Erreur Auth.
+    ref.listen(loginNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
+      final errorStack = await next;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSimpleModal(context, "Oups…", errorStack.last);
+      });
+    });
 
-      if (next.asData?.value.state == ResetState.failure) {
-        Navigator.of(context).pop();
-        _resetNotifier.reset();
-        showModalResetFailure(context);
-        return;
-      }
+    // * Ecouteur: Password reset.
+    ref.listen(resetPasswordNotifierProvider.selectAsync((state) => state.success), (previous, next) async {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSimpleModal(
+          context,
+          "Vérifier votre boîte mail",
+          "Vous avez reçu un email afin de réinitialiser votre mot de passe.",
+        );
+      });
+    });
+
+    // * Ecouteur: Password reset error.
+    ref.listen(resetPasswordNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
+      final errorStack = await next;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showSimpleModal(context, "Oups…", errorStack.last);
+      });
     });
 
     return Scaffold(
@@ -67,18 +64,14 @@ class _State extends ConsumerState<LoginScreen> {
             padding: const EdgeInsetsGeometry.all(40),
             child: Column(
               children: [
-                SizedBox(height: topPadding),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
 
-                /// * Main Text *
-                const Text(
+                // * Main Text *
+                Text(
                   'Connectez-vous ou créez un compte.',
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: customBlue,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: theme.textTheme.headlineLarge,
                 ),
                 const SizedBox(height: 40),
 
@@ -86,33 +79,22 @@ class _State extends ConsumerState<LoginScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Adresse email',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
+                    Text('Adresse email', style: theme.textTheme.labelLarge),
                     TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'john.doe@gmail.com',
-                        labelStyle: TextStyle(color: customGrey),
-                      ),
+                      keyboardType: TextInputType.emailAddress,
                       onChanged: _loginNotifier.updateEmail,
+                      decoration: const InputDecoration(hintText: "john.doe@gmail.com"),
                     ),
                     const SizedBox(height: 40),
-                    const Text(
-                      'Mot de passe',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
+                    Text('Mot de passe', style: theme.textTheme.labelLarge),
                     TextField(
                       decoration: const InputDecoration(
-                        labelText: 'Mot de passe',
-                        icon: Icon(
-                          Icons.remove_red_eye_rounded,
-                          color: customGrey,
-                        ),
-                        labelStyle: TextStyle(color: customGrey),
+                        hintText: "Mot de passe",
+                        suffixIcon: Icon(Icons.remove_red_eye_rounded),
                       ),
+                      keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
-                      onChanged: _loginNotifier.updatePwd,
+                      onChanged: _loginNotifier.updatePassword,
                     ),
                   ],
                 ),
@@ -122,20 +104,37 @@ class _State extends ConsumerState<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Mot de passe oublié ? ',
-                      style: TextStyle(color: customGrey),
+                    Text('Mot de passe oublié ? ', style: theme.textTheme.bodyMedium),
+                    GestureDetector(
+                      onTap: () async {
+                        if (await showModalReset(context, _resetNotifier) == "submit") {
+                          _resetNotifier.submit();
+                        }
+                      },
+                      child: Text(
+                        'Réinitialiser',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.primaryColor,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+
+                /// * Create new account *
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     GestureDetector(
                       onTap: () {
-                        // FocusScope.of(context).unfocus();
-                        showModalReset(context, _resetNotifier);
+                        AutoRouter.of(context).pushPath('/create-account');
                       },
-                      child: const Text(
-                        'Réinitialiser',
-                        style: TextStyle(
-                          color: customBlue,
-                          fontWeight: FontWeight.w600,
+                      child: Text(
+                        'Créer un compte',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.primaryColor,
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -147,28 +146,11 @@ class _State extends ConsumerState<LoginScreen> {
                 /// * Submit button *
                 SizedBox(
                   width: double.infinity,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.all(20),
-                      backgroundColor: customBlue,
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(10),
-                        side: BorderSide.none,
-                      ),
-                      textStyle: const TextStyle(fontWeight: FontWeight.w900),
-                    ),
+                  child: ElevatedButton(
                     onPressed: () {
-                      FocusScope.of(context).unfocus();
                       _loginNotifier.submit();
                     },
-                    child: const Text(
-                      'Connexion',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
+                    child: const Text('Connexion'),
                   ),
                 ),
               ],

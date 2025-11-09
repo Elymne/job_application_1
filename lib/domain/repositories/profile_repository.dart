@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:naxan_test/domain/models/profile_model.dart';
 
 abstract class ProfileRepository {
@@ -17,9 +19,17 @@ abstract class ProfileRepository {
   /// Reset le MDP.
   Future<void> resetPassword(String email);
 
-  /// Permet de créer un compte.
+  /// Permet de créer un compte d'authentification.
   Future<void> addNewAccount(String email, String pwd);
 
-  /// Ajoute ou modifie un profil.
-  Future<void> putProfile(ProfileModel profileModel);
+  /// Ajout d'un nouveau profil associé à l'utilisateur connecté.
+  /// L'utilisateur doit donc-être connecté pour utiliser lors de l'utilisation de cette fonction.
+  Future<void> createProfile(String surname, String firstname, File imageData);
+
+  /// Modification d'un profil associé à l'utilisateur connecté.
+  /// L'utilisateur doit donc-être connecté pour utiliser lors de l'utilisation de cette fonction.
+  Future<void> updateProfile(ProfileModel profileModel, File imageData);
+
+  /// Récupération d'un profil via l'id.
+  Future<ProfileModel?> findProfile(String id);
 }

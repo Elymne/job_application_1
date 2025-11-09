@@ -1,4 +1,18 @@
+import 'package:naxan_test/domain/models/post_model.dart';
+import 'dart:io';
+
 abstract class PostRepository {
-  /// Pas besoin de params pour l'exemple, on va juste renvoyer une liste brute issu de la DB tout de même.
-  Future<List<Object>> findNewest();
+  /// Récupération par date des derniers posts créé.
+  Future<List<PostModel>> findNewest();
+
+  /// Ajoute un nouveau post de l'utilisateur connecté uniquement.
+  Future<void> create(String description, File imageData);
+
+  /// Signale un contenu.
+  /// Incrément du niveay de report d'une publie.
+  Future<void> report(String id);
+
+  /// Suppression d'un post.
+  /// Cela ne marche que si le post provient de l'utilisateur connecté.
+  Future<void> delete(String id);
 }
