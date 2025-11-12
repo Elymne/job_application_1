@@ -165,6 +165,19 @@ class _State extends ConsumerState<HomeScreen> {
                                   ]);
                                   if (res == 'delete') {
                                     await _newPostsNotifier.deleteById(postBundle.postModel.id);
+                                    WidgetsBinding.instance.addPostFrameCallback((_) async {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
+
+                                          content: const Text("Post supprimé !"),
+                                          backgroundColor: const Color.fromARGB(255, 228, 15, 15),
+                                          duration: const Duration(seconds: 2),
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                        ),
+                                      );
+                                    });
                                   }
                                   return;
                                 }
@@ -181,8 +194,22 @@ class _State extends ConsumerState<HomeScreen> {
                                     ),
                                   },
                                 ]);
+
                                 if (res == 'report') {
                                   await _newPostsNotifier.reportById(postBundle.postModel.id);
+                                  WidgetsBinding.instance.addPostFrameCallback((_) async {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
+
+                                        content: const Text("Post signalé !"),
+                                        backgroundColor: const Color.fromARGB(255, 228, 15, 15),
+                                        duration: const Duration(seconds: 2),
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      ),
+                                    );
+                                  });
                                 }
                               },
                             ),
