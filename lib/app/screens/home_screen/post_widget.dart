@@ -38,6 +38,7 @@ class PostWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsetsGeometry.all(20),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(100),
@@ -49,25 +50,27 @@ class PostWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 20),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "${profile.firstname} ${profile.surname}",
-                            style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
-                          ),
-                          const SizedBox(width: 20),
-                          Text(
-                            "${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(post.createdAt)).inMinutes} min",
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                      Text(post.description, style: theme.textTheme.bodyMedium),
-                    ],
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "${profile.firstname} ${profile.surname}",
+                              style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
+                            ),
+                            const SizedBox(width: 20),
+                            Text(
+                              "${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(post.createdAt)).inMinutes} min",
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                        Text(post.description, style: theme.textTheme.bodyMedium),
+                      ],
+                    ),
                   ),
                 ],
               ),

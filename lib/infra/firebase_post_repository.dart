@@ -66,7 +66,11 @@ class FirebasePostRepository implements PostRepository {
 
   @override
   Future<List<PostModel>> findNewest() async {
-    final snapshot = await FirebaseFirestore.instance.collection(collectionName).limit(20).orderBy("createdAt").get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection(collectionName)
+        .limit(20)
+        .orderBy("createdAt", descending: true)
+        .get();
     final docs = snapshot.docs;
     final posts = docs.map((elem) => PostModel.fromJson(elem.data()));
 
