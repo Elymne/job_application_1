@@ -42,7 +42,7 @@ class _State extends ConsumerState<OptionsScreen> {
 
                 return SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsetsGeometry.all(40),
+                    padding: const EdgeInsetsGeometry.all(20),
                     child: Column(
                       children: [
                         const SizedBox(height: 40),
@@ -88,6 +88,240 @@ class _State extends ConsumerState<OptionsScreen> {
                               onClick: () {
                                 print("OPTIONS MON GATé");
                               },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.lock_open_outlined, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Sécurité",
+                              lastText: "Mot de passe, email…",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 20),
+
+                            Text("Paramètres", style: theme.textTheme.headlineLarge),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.notification_add_outlined, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Notifications push",
+                              lastText: "Activées",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 20),
+
+                            Text("Autres", style: theme.textTheme.headlineLarge),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.help_outline, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Aide",
+                              lastText: "Contactez-nous par email",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.share, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Partager l'app",
+                              lastText: "Soutenez-nous en partageant l'app",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 20),
+
+                            Text("Liens", style: theme.textTheme.headlineLarge),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              firstText: "Politique de confidentialité",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              firstText: "Conditions générales de ventes et d'utilisation",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              firstText: "Mentions légales",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              firstText: "A propos",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 20),
+
+                            Text("Réseaux sociaux", style: theme.textTheme.headlineLarge),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.facebook, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Notre page facebook",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.insert_page_break_rounded, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Notre page facebook",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.facebook, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Notre page facebook",
+                              sufixe: const Icon(Icons.h_mobiledata, color: Color.fromARGB(255, 165, 165, 165)),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 10),
+
+                            OptionItem(
+                              prefix: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  color: theme.colorScheme.primary,
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Icon(Icons.donut_large, size: 40, color: Colors.white),
+                                ),
+                              ),
+                              firstText: "Notre page facebook",
+                              sufixe: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Color.fromARGB(255, 165, 165, 165),
+                              ),
+                              onClick: () {
+                                print("OPTIONS MON GATé");
+                              },
+                            ),
+                            const SizedBox(height: 20),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text("Edité par ", style: theme.textTheme.bodyLarge),
+                                Text(
+                                  "kosmos-digital.com",
+                                  style: theme.textTheme.bodyLarge?.copyWith(decoration: TextDecoration.underline),
+                                ),
+                              ],
                             ),
                           ],
                         ),
