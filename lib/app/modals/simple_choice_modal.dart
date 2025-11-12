@@ -8,16 +8,10 @@ Future<bool?> showSimpleChoiceModal(BuildContext context, String title) async {
     context: context,
     builder: (context) => AlertDialog(
       backgroundColor: Colors.white,
-      title: Text(title, maxLines: 2, textAlign: TextAlign.center, style: theme.textTheme.headlineLarge),
+      title: Text(title, maxLines: 2, textAlign: TextAlign.center, style: theme.textTheme.bodyLarge),
       actions: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(onPressed: () => Navigator.pop(context, true), child: const Text("Oui")),
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(onPressed: () => Navigator.pop(context, false), child: const Text("Non")),
-        ),
+        ElevatedButton(onPressed: () => Navigator.pop(context, true), child: const Text("Oui")),
+        ElevatedButton(onPressed: () => Navigator.pop(context, false), child: const Text("Non")),
       ],
     ),
   );

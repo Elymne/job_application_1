@@ -33,15 +33,16 @@ class FirebasePostRepository implements PostRepository {
     }
 
     // * Store post data to firestore.
+    final id = const Uuid().v4();
     final newPost = PostModel(
-      id: const Uuid().v4(),
+      id: id,
       createdAt: DateTime.now().millisecondsSinceEpoch,
       description: description,
       imageId: fileId,
       profileId: authUser.uid,
       reportCount: 0,
     );
-    await FirebaseFirestore.instance.collection(collectionName).doc(authUser.uid).set(newPost.toJson());
+    await FirebaseFirestore.instance.collection(collectionName).doc(id).set(newPost.toJson());
   }
 
   @override

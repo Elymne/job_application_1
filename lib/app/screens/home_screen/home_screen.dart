@@ -135,6 +135,7 @@ class _State extends ConsumerState<HomeScreen> {
                                   }
                                   return;
                                 }
+
                                 if (await showSimpleChoiceModal(context, "Signaler la publication ?") ?? false) {
                                   await _newPostsNotifier.reportById(postBundle.postModel.id);
                                 }
