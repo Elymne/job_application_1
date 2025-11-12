@@ -75,13 +75,18 @@ class _State extends ConsumerState<HomeScreen> {
                               ],
                             ),
                           ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image(
-                              image: NetworkImage("$serverImagesUrl/${currentProfilAsync.value!.imageId}"),
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              AutoRouter.of(context).pushPath("/options");
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image(
+                                image: NetworkImage("$serverImagesUrl/${currentProfilAsync.value!.imageId}"),
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ],
@@ -129,7 +134,7 @@ class _State extends ConsumerState<HomeScreen> {
                               post: postBundle.postModel,
                               profile: postBundle.profileModel,
                               onMore: () async {
-                                if (postBundle.postModel.profileId == postBundle.profileModel.id) {
+                                if (postBundle.postModel.profileId == currentProfilAsync.value?.id) {
                                   if (await showSimpleChoiceModal(context, "Supprimer la publication ?") ?? false) {
                                     await _newPostsNotifier.deleteById(postBundle.postModel.id);
                                   }

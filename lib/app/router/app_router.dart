@@ -24,6 +24,7 @@ class AppRouter extends RootStackRouter {
     // * Main App screens.
     AutoRoute(path: '/home', page: HomeRoute.page, guards: [_AuthGuard(_profileRepo)]),
     AutoRoute(path: '/create-post', page: CreatePostRoute.page, guards: [_AuthGuard(_profileRepo)]),
+    AutoRoute(path: '/options', page: OptionsRoute.page, guards: [_AuthGuard(_profileRepo)]),
   ];
 
   @override
