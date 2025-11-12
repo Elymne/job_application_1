@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:naxan_test/app/modals/modal_select.dart';
 import 'package:naxan_test/app/modals/simple_choice_modal.dart';
 import 'package:naxan_test/app/screens/home_screen/post_widget.dart';
 import 'package:naxan_test/app/screens/home_screen/current_profile_notifier.dart';
@@ -134,16 +135,40 @@ class _State extends ConsumerState<HomeScreen> {
                               post: postBundle.postModel,
                               profile: postBundle.profileModel,
                               onMore: () async {
-                                if (postBundle.postModel.profileId == currentProfilAsync.value?.id) {
-                                  if (await showSimpleChoiceModal(context, "Supprimer la publication ?") ?? false) {
-                                    await _newPostsNotifier.deleteById(postBundle.postModel.id);
-                                  }
-                                  return;
-                                }
+                                await showSimpleModalSelect(context, [
+                                  {
+                                    "code": "report",
+                                    "text": Text(
+                                      "Signaler cette publication",
+                                      textAlign: TextAlign.center,
+                                      style: theme.textTheme.bodyLarge?.copyWith(
+                                        color: const Color.fromARGB(255, 255, 0, 0),
+                                      ),
+                                    ),
+                                  },
+                                  {
+                                    "code": "delete",
+                                    "text": Text(
+                                      "Supprimer cette publication",
+                                      textAlign: TextAlign.center,
+                                      style: theme.textTheme.bodyLarge?.copyWith(
+                                        color: const Color.fromARGB(255, 255, 0, 0),
+                                      ),
+                                    ),
+                                  },
+                                ]);
+                                return;
 
-                                if (await showSimpleChoiceModal(context, "Signaler la publication ?") ?? false) {
-                                  await _newPostsNotifier.reportById(postBundle.postModel.id);
-                                }
+                                // if (postBundle.postModel.profileId == currentProfilAsync.value?.id) {
+                                //   if (await showSimpleChoiceModal(context, "Supprimer la publication ?") ?? false) {
+                                //     await _newPostsNotifier.deleteById(postBundle.postModel.id);
+                                //   }
+                                //   return;
+                                // }
+
+                                // if (await showSimpleChoiceModal(context, "Signaler la publication ?") ?? false) {
+                                //   await _newPostsNotifier.reportById(postBundle.postModel.id);
+                                // }
                               },
                             ),
                           );
