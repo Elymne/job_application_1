@@ -25,7 +25,7 @@ Future<String?> showSimpleModalSelect(BuildContext context, List<Map<String, dyn
                 'Que souhaitez-vous faire',
                 maxLines: 1,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium,
+                style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
             ),
 
@@ -39,7 +39,9 @@ Future<String?> showSimpleModalSelect(BuildContext context, List<Map<String, dyn
                     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                     decoration: BoxDecoration(
                       color: Colors.white.withAlpha(220),
-                      // borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: options.length - 1 != index
+                          ? null
+                          : const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                     ),
                     child: SizedBox(child: options[index]["text"]),
                   ),
@@ -61,7 +63,7 @@ Future<String?> showSimpleModalSelect(BuildContext context, List<Map<String, dyn
                   'Annuler',
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineLarge?.copyWith(color: Colors.blue),
+                  style: theme.textTheme.titleSmall?.copyWith(color: Colors.blue),
                 ),
               ),
             ),

@@ -150,40 +150,40 @@ class _State extends ConsumerState<HomeScreen> {
                                 AutoRouter.of(context).pushPath("/post/${postBundle.postModel.id}");
                               },
                               onMore: () async {
-                                await showSimpleModalSelect(context, [
+                                if (postBundle.postModel.profileId == currentProfilAsync.value?.id) {
+                                  final res = await showSimpleModalSelect(context, [
+                                    {
+                                      "code": "delete",
+                                      "text": Text(
+                                        "Supprimer cette publication",
+                                        textAlign: TextAlign.center,
+                                        style: theme.textTheme.titleSmall?.copyWith(
+                                          color: const Color.fromARGB(255, 255, 0, 0),
+                                        ),
+                                      ),
+                                    },
+                                  ]);
+                                  if (res == 'delete') {
+                                    await _newPostsNotifier.deleteById(postBundle.postModel.id);
+                                  }
+                                  return;
+                                }
+
+                                final res = await showSimpleModalSelect(context, [
                                   {
                                     "code": "report",
                                     "text": Text(
                                       "Signaler cette publication",
                                       textAlign: TextAlign.center,
-                                      style: theme.textTheme.bodyLarge?.copyWith(
-                                        color: const Color.fromARGB(255, 255, 0, 0),
-                                      ),
-                                    ),
-                                  },
-                                  {
-                                    "code": "delete",
-                                    "text": Text(
-                                      "Supprimer cette publication",
-                                      textAlign: TextAlign.center,
-                                      style: theme.textTheme.bodyLarge?.copyWith(
+                                      style: theme.textTheme.titleSmall?.copyWith(
                                         color: const Color.fromARGB(255, 255, 0, 0),
                                       ),
                                     ),
                                   },
                                 ]);
-                                return;
-
-                                // if (postBundle.postModel.profileId == currentProfilAsync.value?.id) {
-                                //   if (await showSimpleChoiceModal(context, "Supprimer la publication ?") ?? false) {
-                                //     await _newPostsNotifier.deleteById(postBundle.postModel.id);
-                                //   }
-                                //   return;
-                                // }
-
-                                // if (await showSimpleChoiceModal(context, "Signaler la publication ?") ?? false) {
-                                //   await _newPostsNotifier.reportById(postBundle.postModel.id);
-                                // }
+                                if (res == 'report') {
+                                  await _newPostsNotifier.reportById(postBundle.postModel.id);
+                                }
                               },
                             ),
                           );
