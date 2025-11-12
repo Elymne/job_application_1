@@ -5,6 +5,9 @@ abstract class PostRepository {
   /// Récupération par date des derniers posts créé.
   Future<List<PostModel>> findNewest();
 
+  /// Récupération par ID.
+  Future<PostModel?> findUnique(String id);
+
   /// Ajoute un nouveau post de l'utilisateur connecté uniquement.
   Future<void> create(String description, File imageData);
 

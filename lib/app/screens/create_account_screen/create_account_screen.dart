@@ -57,7 +57,7 @@ class _State extends ConsumerState<CreateAccountScreen> {
                   'Créer un compte.',
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineLarge,
+                  style: theme.textTheme.displayMedium,
                 ),
                 const SizedBox(height: 40),
 
@@ -65,7 +65,7 @@ class _State extends ConsumerState<CreateAccountScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Adresse email', style: theme.textTheme.bodyLarge),
+                    Text('Adresse email', style: theme.textTheme.labelMedium),
                     TextField(
                       decoration: const InputDecoration(hintText: "joe@gmail.com"),
                       keyboardType: TextInputType.emailAddress,
@@ -74,7 +74,7 @@ class _State extends ConsumerState<CreateAccountScreen> {
                     const SizedBox(height: 40),
 
                     // * Password field
-                    Text('Mot de passe', style: theme.textTheme.bodyLarge),
+                    Text('Mot de passe', style: theme.textTheme.labelMedium),
                     TextField(
                       decoration: const InputDecoration(
                         hintText: "Mot de passe",
@@ -86,7 +86,7 @@ class _State extends ConsumerState<CreateAccountScreen> {
                     const SizedBox(height: 40),
 
                     // * Password confirm field
-                    Text('Confirmation Mot de passe', style: theme.textTheme.bodyLarge),
+                    Text('Confirmation Mot de passe', style: theme.textTheme.labelMedium),
                     TextField(
                       decoration: const InputDecoration(
                         hintText: "Mot de passe",

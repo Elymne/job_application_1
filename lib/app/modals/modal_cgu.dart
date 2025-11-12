@@ -33,11 +33,13 @@ Future<String?> showModalCgu(BuildContext context, CreateAccountNotifier notifie
                 const SizedBox(height: 20),
 
                 // Scrollbar
-                const SizedBox(
+                SizedBox(
                   height: 400,
                   child: Scrollbar(
                     thumbVisibility: true, // always show the scroll bar
-                    child: SingleChildScrollView(child: Text(lorem + lorem + lorem + lorem + lorem)),
+                    child: SingleChildScrollView(
+                      child: Text(lorem + lorem + lorem + lorem + lorem, style: theme.textTheme.headlineMedium),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -60,7 +62,7 @@ Future<String?> showModalCgu(BuildContext context, CreateAccountNotifier notifie
                         "J'accepte la politique de confidentialités et les conditions générales de ventes et d'utilisation.",
                         maxLines: 2,
                         textAlign: TextAlign.start,
-                        style: theme.textTheme.bodyMedium,
+                        style: theme.textTheme.labelMedium,
                       ),
                     ),
                   ],

@@ -57,7 +57,7 @@ class _State extends ConsumerState<CreateProfileScreen> {
                   'Créer votre profil.',
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineLarge,
+                  style: theme.textTheme.displayMedium,
                 ),
                 const SizedBox(height: 40),
 
@@ -65,25 +65,25 @@ class _State extends ConsumerState<CreateProfileScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Nom*', style: theme.textTheme.bodyLarge),
+                    Text('Nom*', style: theme.textTheme.labelMedium),
                     TextField(
-                      decoration: const InputDecoration(hintText: 'Petit'),
+                      decoration: const InputDecoration(hintText: 'Ex. Doe'),
                       keyboardType: TextInputType.name,
                       onChanged: _createProfileNotifier.updateSurname,
                     ),
                     const SizedBox(height: 40),
 
                     // * Prénom
-                    Text('Prénom*', style: theme.textTheme.bodyLarge),
+                    Text('Prénom*', style: theme.textTheme.labelMedium),
                     TextField(
-                      decoration: const InputDecoration(hintText: 'Jean'),
+                      decoration: const InputDecoration(hintText: 'Ex. John'),
                       keyboardType: TextInputType.name,
                       onChanged: _createProfileNotifier.updateFirstname,
                     ),
                     const SizedBox(height: 40),
 
                     // * Picker image de profil.
-                    Text('Photo de profil*', style: theme.textTheme.bodyLarge),
+                    Text('Photo de profil*', style: theme.textTheme.labelMedium),
                     GestureDetector(
                       onTap: () async {
                         final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -94,17 +94,19 @@ class _State extends ConsumerState<CreateProfileScreen> {
                         width: double.infinity,
                         height: 120,
                         decoration: BoxDecoration(
+                          color: theme.colorScheme.surfaceContainerLow,
                           borderRadius: const BorderRadius.all(Radius.circular(20)),
-                          border: Border.all(color: Colors.black),
+                          // border: Border.all(color: Colors.black),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.download, size: 40, color: Colors.grey),
+                            const Icon(Icons.cloud_download_outlined, size: 40, color: Colors.grey),
                             Text(
                               imageName == null || imageName.isEmpty
                                   ? "Appuyez pour choisir une photo"
                                   : "Image stocké: $imageName",
+                              style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                             ),
                           ],
                         ),
@@ -121,11 +123,18 @@ class _State extends ConsumerState<CreateProfileScreen> {
                     onPressed: () {
                       _createProfileNotifier.submit();
                     },
-                    child: const Text('Continuer', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+                    child: const Text(
+                      "Terminer l'inscription",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text('*Les champs marqués sont obligatoires', style: theme.textTheme.bodyLarge),
+                Text(
+                  '* Les champs marqués sont obligatoires',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.labelMedium,
+                ),
               ],
             ),
           ),

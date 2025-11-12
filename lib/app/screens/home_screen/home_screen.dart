@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naxan_test/app/modals/modal_select.dart';
-import 'package:naxan_test/app/modals/simple_choice_modal.dart';
 import 'package:naxan_test/app/screens/home_screen/post_widget.dart';
 import 'package:naxan_test/app/screens/home_screen/current_profile_notifier.dart';
 import 'package:naxan_test/app/screens/home_screen/new_posts_notifier.dart';
@@ -33,7 +32,7 @@ class _State extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final currentProfilAsync = ref.watch(currentProfileNotifierProvider);
-    final postBundles = ref.watch(newPostNotifierProvider);
+    final postBundlesAsync = ref.watch(newPostNotifierProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -44,7 +43,7 @@ class _State extends ConsumerState<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                // * Top-content.
+                // todo: En faire un widget à part.
                 Builder(
                   builder: (context) {
                     if (currentProfilAsync.isLoading) {
@@ -53,6 +52,15 @@ class _State extends ConsumerState<HomeScreen> {
                         width: 40,
                         child: CircularProgressIndicator(color: theme.colorScheme.primary, strokeWidth: 6),
                       );
+                    }
+
+                    if (currentProfilAsync.hasError) {
+                      return const Text("Erreur de profil…");
+                    }
+
+                    final currentProfile = currentProfilAsync.value;
+                    if (currentProfile == null) {
+                      return const Text("Pas de profil™");
                     }
 
                     return Padding(
@@ -64,15 +72,11 @@ class _State extends ConsumerState<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Bonjour, ${currentProfilAsync.value!.firstname} 👋",
+                                  "Bonjour, ${currentProfile.firstname} 👋",
                                   textAlign: TextAlign.start,
-                                  style: theme.textTheme.bodyMedium,
+                                  style: theme.textTheme.titleMedium,
                                 ),
-                                Text(
-                                  "Fil d'actualités",
-                                  textAlign: TextAlign.start,
-                                  style: theme.textTheme.headlineLarge,
-                                ),
+                                Text("Fil d'actualités", textAlign: TextAlign.start, style: theme.textTheme.titleLarge),
                               ],
                             ),
                           ),
@@ -83,7 +87,7 @@ class _State extends ConsumerState<HomeScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
                               child: Image(
-                                image: NetworkImage("$serverImagesUrl/${currentProfilAsync.value!.imageId}"),
+                                image: NetworkImage("$serverImagesUrl/${currentProfile.imageId}"),
                                 width: 60,
                                 height: 60,
                                 fit: BoxFit.cover,
@@ -106,7 +110,7 @@ class _State extends ConsumerState<HomeScreen> {
                 // * Title.
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Text("Récents", textAlign: TextAlign.start, style: theme.textTheme.bodyLarge),
+                  child: Text("Récents", textAlign: TextAlign.start, style: theme.textTheme.titleSmall),
                 ),
                 const SizedBox(height: 10),
 
@@ -114,7 +118,7 @@ class _State extends ConsumerState<HomeScreen> {
                 Expanded(
                   child: Builder(
                     builder: (context) {
-                      if (postBundles.isLoading) {
+                      if (postBundlesAsync.isLoading) {
                         return Center(
                           child: SizedBox(
                             height: 40,
@@ -124,16 +128,27 @@ class _State extends ConsumerState<HomeScreen> {
                         );
                       }
 
-                      return ListView.builder(
-                        itemCount: postBundles.value!.length,
-                        itemBuilder: (context, index) {
-                          final postBundle = postBundles.value![index];
+                      if (postBundlesAsync.hasError) {
+                        return const Text("Erreur de profil…");
+                      }
 
+                      final postBundles = postBundlesAsync.value;
+                      if (postBundles == null) {
+                        return const Text("Pas de posts il semblerait");
+                      }
+
+                      return ListView.builder(
+                        itemCount: postBundles.length,
+                        itemBuilder: (context, index) {
+                          final postBundle = postBundles[index];
                           return Padding(
                             padding: const EdgeInsetsGeometry.only(top: 10),
                             child: PostWidget(
                               post: postBundle.postModel,
                               profile: postBundle.profileModel,
+                              onClick: () {
+                                AutoRouter.of(context).pushPath("/post/${postBundle.postModel.id}");
+                              },
                               onMore: () async {
                                 await showSimpleModalSelect(context, [
                                   {
@@ -184,7 +199,7 @@ class _State extends ConsumerState<HomeScreen> {
             Align(
               alignment: AlignmentGeometry.bottomCenter,
               child: Padding(
-                padding: const EdgeInsetsGeometry.all(40),
+                padding: const EdgeInsetsGeometry.all(20),
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.all(20),
@@ -198,7 +213,7 @@ class _State extends ConsumerState<HomeScreen> {
                   onPressed: () async {
                     await AutoRouter.of(context).pushPath("/create-post");
                   },
-                  child: const Icon(Icons.add, color: Colors.black, size: 40),
+                  child: const Icon(Icons.add, color: Colors.black, size: 60),
                 ),
               ),
             ),

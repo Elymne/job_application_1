@@ -46,26 +46,6 @@ class FirebasePostRepository implements PostRepository {
   }
 
   @override
-  Future<void> delete(String id) async {
-    final authUser = FirebaseAuth.instance.currentUser;
-    if (authUser == null) {
-      throw FirebaseAuthException(code: 'user-not-found');
-    }
-
-    final snapshot = await FirebaseFirestore.instance.collection(collectionName).where("id", isEqualTo: id).get();
-    final docs = snapshot.docs;
-    if (docs.isEmpty) {
-      throw FirebaseException(
-        plugin: "firestore",
-        message: "Le post en question n'existe pas ou n'est pas celui du l'utilisateur courrant",
-      );
-    }
-
-    // * Sur que le post vient de l'utilisateur courrant.
-    await FirebaseFirestore.instance.collection(collectionName).doc(id).delete();
-  }
-
-  @override
   Future<List<PostModel>> findNewest() async {
     final snapshot = await FirebaseFirestore.instance
         .collection(collectionName)
@@ -76,6 +56,16 @@ class FirebasePostRepository implements PostRepository {
     final posts = docs.map((elem) => PostModel.fromJson(elem.data()));
 
     return posts.toList();
+  }
+
+  @override
+  Future<PostModel?> findUnique(String id) async {
+    final snapshot = await FirebaseFirestore.instance.collection(collectionName).where("id", isEqualTo: id).get();
+    final docs = snapshot.docs;
+    if (docs.isEmpty) {
+      return null;
+    }
+    return PostModel.fromJson(docs.first.data());
   }
 
   @override
@@ -94,5 +84,25 @@ class FirebasePostRepository implements PostRepository {
     final post = PostModel.fromJson(docs.first.data());
     final updatedPost = post.copyWith(reportCount: post.reportCount + 1);
     await FirebaseFirestore.instance.collection(collectionName).doc(id).set(updatedPost.toJson());
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    final authUser = FirebaseAuth.instance.currentUser;
+    if (authUser == null) {
+      throw FirebaseAuthException(code: 'user-not-found');
+    }
+
+    final snapshot = await FirebaseFirestore.instance.collection(collectionName).where("id", isEqualTo: id).get();
+    final docs = snapshot.docs;
+    if (docs.isEmpty) {
+      throw FirebaseException(
+        plugin: "firestore",
+        message: "Le post en question n'existe pas ou n'est pas celui du l'utilisateur courrant",
+      );
+    }
+
+    // * Sur que le post vient de l'utilisateur courrant.
+    await FirebaseFirestore.instance.collection(collectionName).doc(id).delete();
   }
 }

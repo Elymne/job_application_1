@@ -34,14 +34,20 @@ final appTheme = ThemeData(
       color: _colorScheme.primary,
     ),
 
+    // * [Home] title.
+    titleMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: _colorScheme.onSurfaceVariant),
+    titleLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.normal, color: _colorScheme.primary),
+    titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: _colorScheme.primary),
+
     // * [InteractiveElement/button]: all.
     labelLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: _colorScheme.primary),
 
-    // * [TextField][Link][CardTitle]: label + hint.
+    // * [TextField][Link][Menu]: label + hint.
     labelMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: _colorScheme.primary),
 
-    // * [Basic] All data bloc text.
-    bodyLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 49, 49, 49)),
+    // * [Basic][Card] All data bloc text.
+    bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: _colorScheme.surface),
+    bodyMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: _colorScheme.onSurfaceVariant),
 
     // * [Modal] main text.
     headlineLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: _colorScheme.primary),

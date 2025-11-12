@@ -5,7 +5,6 @@ import 'package:naxan_test/infra/firebase_post_repository.dart';
 import 'package:naxan_test/infra/firebase_profile_repository.dart';
 import 'dart:async';
 
-// TODO: Changer mon PostModel mais flemme.
 class PostBundle {
   final PostModel postModel;
   final ProfileModel profileModel;

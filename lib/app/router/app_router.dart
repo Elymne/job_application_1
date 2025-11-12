@@ -18,11 +18,12 @@ class AppRouter extends RootStackRouter {
 
     // * Login/profile creation…
     AutoRoute(path: '/login', page: LoginRoute.page, guards: [_LoginGuard(_profileRepo)]),
-    AutoRoute(path: '/create-account', page: CreateAccountRoute.page),
+    AutoRoute(path: '/create-account', page: CreateAccountRoute.page, guards: [_LoginGuard(_profileRepo)]),
     AutoRoute(path: '/create-profile', page: CreateProfileRoute.page, guards: [_CreateProfileGuard(_profileRepo)]),
 
     // * Main App screens.
     AutoRoute(path: '/home', page: HomeRoute.page, guards: [_AuthGuard(_profileRepo)]),
+    AutoRoute(path: '/post/:id', page: PostRoute.page, guards: [_AuthGuard(_profileRepo)]),
     AutoRoute(path: '/create-post', page: CreatePostRoute.page, guards: [_AuthGuard(_profileRepo)]),
     AutoRoute(path: '/options', page: OptionsRoute.page, guards: [_AuthGuard(_profileRepo)]),
   ];
