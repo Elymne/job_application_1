@@ -38,7 +38,7 @@ class PostWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsetsGeometry.all(20),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(100),
@@ -68,7 +68,12 @@ class PostWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(post.description, style: theme.textTheme.bodyMedium),
+                        Text(
+                          post.description,
+                          maxLines: 2,
+                          overflow: TextOverflow.fade,
+                          style: theme.textTheme.bodyMedium,
+                        ),
                       ],
                     ),
                   ),
