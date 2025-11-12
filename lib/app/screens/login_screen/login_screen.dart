@@ -71,7 +71,7 @@ class _State extends ConsumerState<LoginScreen> {
                   'Connectez-vous ou créez un compte.',
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineLarge,
+                  style: theme.textTheme.displayMedium,
                 ),
                 const SizedBox(height: 40),
 
@@ -79,14 +79,14 @@ class _State extends ConsumerState<LoginScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Adresse email', style: theme.textTheme.labelLarge),
+                    Text('Adresse email', style: theme.textTheme.labelMedium),
                     TextField(
                       keyboardType: TextInputType.emailAddress,
                       onChanged: _loginNotifier.updateEmail,
                       decoration: const InputDecoration(hintText: "john.doe@gmail.com"),
                     ),
                     const SizedBox(height: 40),
-                    Text('Mot de passe', style: theme.textTheme.labelLarge),
+                    Text('Mot de passe', style: theme.textTheme.labelMedium),
                     TextField(
                       decoration: const InputDecoration(
                         hintText: "Mot de passe",
@@ -104,7 +104,10 @@ class _State extends ConsumerState<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Mot de passe oublié ? ', style: theme.textTheme.bodyMedium),
+                    Text(
+                      'Mot de passe oublié ? ',
+                      style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                    ),
                     GestureDetector(
                       onTap: () async {
                         if (await showModalReset(context, _resetNotifier) == "submit") {
@@ -113,10 +116,7 @@ class _State extends ConsumerState<LoginScreen> {
                       },
                       child: Text(
                         'Réinitialiser',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.primaryColor,
-                          decoration: TextDecoration.underline,
-                        ),
+                        style: theme.textTheme.labelMedium?.copyWith(decoration: TextDecoration.underline),
                       ),
                     ),
                   ],
@@ -133,10 +133,7 @@ class _State extends ConsumerState<LoginScreen> {
                       },
                       child: Text(
                         'Créer un compte',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.primaryColor,
-                          decoration: TextDecoration.underline,
-                        ),
+                        style: theme.textTheme.labelMedium?.copyWith(decoration: TextDecoration.underline),
                       ),
                     ),
                   ],

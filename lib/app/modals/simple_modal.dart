@@ -6,11 +6,10 @@ Future<String?> showSimpleModal(BuildContext context, String title, String messa
 
   return showDialog<String>(
     context: context,
-
     builder: (context) => AlertDialog(
       backgroundColor: Colors.white,
       title: Text(title, maxLines: 2, textAlign: TextAlign.center, style: theme.textTheme.headlineLarge),
-      content: Text(message, textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
+      content: Text(message, textAlign: TextAlign.center, style: theme.textTheme.headlineMedium),
       actions: [
         SizedBox(
           width: double.infinity,

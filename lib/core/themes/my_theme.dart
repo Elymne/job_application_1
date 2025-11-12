@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 
 final _colorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 2, 20, 49),
-  surface: Colors.white,
+
   primary: const Color.fromARGB(255, 2, 25, 61),
-  onSurface: const Color.fromARGB(255, 158, 158, 158),
+  onPrimary: Colors.white,
+
+  surface: const Color.fromARGB(255, 255, 255, 255),
+  surfaceContainerLow: const Color.fromARGB(255, 243, 243, 243),
+  onSurface: const Color.fromARGB(255, 65, 65, 65),
+  onSurfaceVariant: const Color.fromARGB(255, 173, 173, 173),
+
   brightness: Brightness.light,
 );
 
@@ -13,54 +19,56 @@ final appTheme = ThemeData(
   colorScheme: _colorScheme,
 
   textTheme: TextTheme(
-    headlineLarge: TextStyle(
-      fontSize: 28,
+    // * Titre (Screen).
+    displayMedium: TextStyle(
+      fontSize: 32,
       fontWeight: FontWeight.bold,
-      letterSpacing: -0.5,
+      letterSpacing: -0.6,
       color: _colorScheme.primary,
     ),
-    headlineMedium: TextStyle(
+    // * Sous-titre (Screen).
+    displaySmall: TextStyle(
       fontSize: 28,
       fontWeight: FontWeight.bold,
-      letterSpacing: -0.5,
-      color: _colorScheme.onSurface,
+      letterSpacing: -0.6,
+      color: _colorScheme.primary,
     ),
 
-    labelLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: _colorScheme.primary),
+    // * [InteractiveElement/button]: all.
+    labelLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: _colorScheme.primary),
 
-    bodyLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 29, 29, 29)),
-    bodyMedium: TextStyle(fontSize: 14, color: _colorScheme.onSurface),
+    // * [TextField][Link][CardTitle]: label + hint.
+    labelMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: _colorScheme.primary),
+
+    // * [Basic] All data bloc text.
+    bodyLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 49, 49, 49)),
+
+    // * [Modal] main text.
+    headlineLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: _colorScheme.primary),
+    // * [Modal] second text.
+    headlineMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.normal, color: _colorScheme.onSurfaceVariant),
   ),
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: _colorScheme.primary,
-      foregroundColor: Colors.white,
-      textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      foregroundColor: _colorScheme.onPrimary,
+      textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
     ),
   ),
 
   // ---- CHAMPS DE TEXTE ----
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: Colors.grey.shade100,
-    hintStyle: TextStyle(fontSize: 14, color: _colorScheme.onSurface),
+    fillColor: _colorScheme.surfaceContainerLow,
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
 
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
-    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
-    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
+    hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: _colorScheme.onSurfaceVariant),
+    iconColor: _colorScheme.onSurfaceVariant,
 
-    suffixIconColor: _colorScheme.onSurface,
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-  ),
-
-  // ---- AUTRES ----
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    titleTextStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-    iconTheme: IconThemeData(color: Colors.black87),
   ),
 );

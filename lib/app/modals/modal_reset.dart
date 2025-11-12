@@ -26,12 +26,12 @@ Future<String?> showModalReset(BuildContext context, ResetPasswordNotifier reset
               Text(
                 "Entrez l'adresse email associée à votre compte. Nous vous enverrons un email de réinitialisation sur celle-ci",
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium,
+                style: theme.textTheme.headlineMedium,
               ),
               const SizedBox(height: 40),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Adresse email', style: theme.textTheme.labelLarge),
+                child: Text('Adresse email', style: theme.textTheme.labelMedium),
               ),
               TextField(
                 decoration: const InputDecoration(hintText: "john.doe@gmail.com"),
