@@ -14,7 +14,6 @@ class PostScreenNotifier extends AsyncNotifier<PostBundle?> {
   Future<void> load(String id) async {
     state = const AsyncLoading();
     try {
-      final List<PostBundle> bundles = [];
       final post = await _postRepository.findUnique(id);
       if (post == null) {
         state = const AsyncData(null);

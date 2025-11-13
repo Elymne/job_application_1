@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 /// Modal d'alerte basique (erreur ou validation).
 Future<String?> showSimpleModalSelect(BuildContext context, List<Map<String, dynamic>> options) async {
   final theme = Theme.of(context);
+  final backgroundColor = const Color.fromARGB(255, 245, 245, 245);
 
   return showModalBottomSheet<String>(
     context: context,
@@ -18,7 +19,7 @@ Future<String?> showSimpleModalSelect(BuildContext context, List<Map<String, dyn
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
               decoration: BoxDecoration(
-                color: Colors.white.withAlpha(220),
+                color: backgroundColor,
                 borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               ),
               child: Text(
@@ -30,34 +31,46 @@ Future<String?> showSimpleModalSelect(BuildContext context, List<Map<String, dyn
             ),
 
             ...List.generate(options.length, (index) {
-              return GestureDetector(
-                onTap: () => Navigator.pop(context, options[index]["code"]),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 1),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withAlpha(220),
-                      borderRadius: options.length - 1 != index
-                          ? null
-                          : const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+              return Padding(
+                padding: const EdgeInsets.only(top: 1),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context, options[index]["code"]);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: backgroundColor,
+
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: options.length - 1 != index
+                            ? BorderRadius.zero
+                            : const BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
+                      ),
                     ),
-                    child: SizedBox(child: options[index]["text"]),
+                    child: options[index]["text"],
                   ),
                 ),
               );
             }),
             const SizedBox(height: 20),
 
-            GestureDetector(
-              onTap: () => Navigator.pop(context, null),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => Navigator.pop(context, null),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  elevation: 4,
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                 ),
                 child: Text(
                   'Annuler',
