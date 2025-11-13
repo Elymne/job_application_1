@@ -9,6 +9,14 @@ class CurrentProfileNotifier extends AsyncNotifier<ProfileModel?> {
   @override
   FutureOr<ProfileModel?> build() => null;
 
+  Future<void> logout() async {
+    await _profileRepository.logout();
+  }
+
+  Future<void> deleteAccount() async {
+    await _profileRepository.deleteCurrent();
+  }
+
   Future<void> load() async {
     state = const AsyncLoading();
     try {

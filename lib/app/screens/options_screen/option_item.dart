@@ -36,7 +36,7 @@ class OptionItem extends StatelessWidget {
                   firstText != null
                       ? Text(
                           firstText!,
-                          maxLines: 1,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.start,
                           style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.primary),

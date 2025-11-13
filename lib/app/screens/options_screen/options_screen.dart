@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:naxan_test/app/modals/modal_select.dart';
 import 'package:naxan_test/app/notifiers/current_profile_notifier.dart';
 import 'package:naxan_test/app/screens/options_screen/option_item.dart';
 import 'package:naxan_test/core/constants.dart';
@@ -52,7 +53,51 @@ class _State extends ConsumerState<OptionsScreen> {
                 padding: const EdgeInsetsGeometry.all(20),
                 child: Column(
                   children: [
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () async {
+                          final modalResult = await showSimpleModalSelect(context, [
+                            {
+                              "code": "logout",
+                              "text": Text(
+                                "Se déconnecter",
+                                textAlign: TextAlign.center,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  color: const Color.fromARGB(255, 255, 0, 0),
+                                ),
+                              ),
+                            },
+                            {
+                              "code": "delete",
+                              "text": Text(
+                                "Supprimer mon profil",
+                                textAlign: TextAlign.center,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  color: const Color.fromARGB(255, 255, 0, 0),
+                                ),
+                              ),
+                            },
+                          ]);
+
+                          if (modalResult == "logout") {
+                            await _currentProfileNotifier.logout();
+                            if (!context.mounted) return;
+                            AutoRouter.of(context).replacePath("/login");
+                            return;
+                          }
+
+                          if (modalResult == "delete") {
+                            await _currentProfileNotifier.deleteAccount();
+                            if (!context.mounted) return;
+                            AutoRouter.of(context).replacePath("/login");
+                          }
+                        },
+                        child: Icon(Icons.more_horiz, size: 40, color: theme.colorScheme.primary),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Image(
@@ -98,8 +143,8 @@ class _State extends ConsumerState<OptionsScreen> {
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
                               color: theme.colorScheme.primary,
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.lock_open_outlined, size: 40, color: Colors.white),
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.lock_open_outlined, size: 30, color: Colors.white),
                             ),
                           ),
                           firstText: "Sécurité",
@@ -117,8 +162,8 @@ class _State extends ConsumerState<OptionsScreen> {
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
                               color: theme.colorScheme.primary,
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.notification_add_outlined, size: 40, color: Colors.white),
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.notification_add_outlined, size: 30, color: Colors.white),
                             ),
                           ),
                           firstText: "Notifications push",
@@ -135,16 +180,14 @@ class _State extends ConsumerState<OptionsScreen> {
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
                               color: theme.colorScheme.primary,
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.help_outline, size: 40, color: Colors.white),
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.help_outline, size: 30, color: Colors.white),
                             ),
                           ),
                           firstText: "Aide",
                           lastText: "Contactez-nous par email",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 10),
 
@@ -153,16 +196,14 @@ class _State extends ConsumerState<OptionsScreen> {
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
                               color: theme.colorScheme.primary,
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.share, size: 40, color: Colors.white),
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.share, size: 30, color: Colors.white),
                             ),
                           ),
                           firstText: "Partager l'app",
                           lastText: "Soutenez-nous en partageant l'app",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 20),
 
@@ -172,36 +213,28 @@ class _State extends ConsumerState<OptionsScreen> {
                         OptionItem(
                           firstText: "Politique de confidentialité",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 10),
 
                         OptionItem(
                           firstText: "Conditions générales de ventes et d'utilisation",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 10),
 
                         OptionItem(
                           firstText: "Mentions légales",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 10),
 
                         OptionItem(
                           firstText: "A propos",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 20),
 
@@ -212,16 +245,14 @@ class _State extends ConsumerState<OptionsScreen> {
                           prefix: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
-                              color: theme.colorScheme.primary,
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.facebook, size: 40, color: Colors.white),
+                              color: Colors.blueAccent,
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.facebook, size: 30, color: Colors.white),
                             ),
                           ),
                           firstText: "Notre page facebook",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 10),
 
@@ -229,16 +260,14 @@ class _State extends ConsumerState<OptionsScreen> {
                           prefix: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
-                              color: theme.colorScheme.primary,
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.insert_page_break_rounded, size: 40, color: Colors.white),
+                              color: Colors.purple,
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.insert_page_break_rounded, size: 30, color: Colors.white),
                             ),
                           ),
-                          firstText: "Notre page facebook",
+                          firstText: "Notre Instagram",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 10),
 
@@ -246,16 +275,14 @@ class _State extends ConsumerState<OptionsScreen> {
                           prefix: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
-                              color: theme.colorScheme.primary,
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.facebook, size: 40, color: Colors.white),
+                              color: Colors.blue,
+                              padding: const EdgeInsets.all(15),
+                              child: const Icon(Icons.animation_outlined, size: 30, color: Colors.white),
                             ),
                           ),
-                          firstText: "Notre page facebook",
+                          firstText: "Notre Twitter",
                           sufixe: const Icon(Icons.h_mobiledata, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 10),
 
@@ -263,16 +290,14 @@ class _State extends ConsumerState<OptionsScreen> {
                           prefix: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
-                              color: theme.colorScheme.primary,
+                              color: Colors.yellow,
                               padding: const EdgeInsets.all(10),
-                              child: const Icon(Icons.donut_large, size: 40, color: Colors.white),
+                              child: const Icon(Icons.group_sharp, size: 40, color: Colors.white),
                             ),
                           ),
-                          firstText: "Notre page facebook",
+                          firstText: "Notre Snapchat",
                           sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
-                          onTap: () {
-                            print("OPTIONS MON GATé");
-                          },
+                          onTap: () {},
                         ),
                         const SizedBox(height: 20),
 

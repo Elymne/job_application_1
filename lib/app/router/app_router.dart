@@ -14,7 +14,7 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     // * Entry point: Un splashscreen classique.
-    AutoRoute(path: '/splash', page: SplashRoute.page, initial: false),
+    AutoRoute(path: '/splash', page: SplashRoute.page, initial: true),
 
     // * Login/profile creation…
     AutoRoute(path: '/login', page: LoginRoute.page, guards: [_LoginGuard(_profileRepo)]),
@@ -27,7 +27,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(path: '/create-post', page: CreatePostRoute.page, guards: [_AuthGuard(_profileRepo)]),
 
     // * Options Screens.
-    AutoRoute(path: '/options', page: OptionsRoute.page, guards: [_AuthGuard(_profileRepo)], initial: true),
+    AutoRoute(path: '/options', page: OptionsRoute.page, guards: [_AuthGuard(_profileRepo)]),
     AutoRoute(path: '/options/profile', page: UpdateProfileRoute.page, guards: [_AuthGuard(_profileRepo)]),
     AutoRoute(path: '/options/security', page: UpdateSecurityRoute.page, guards: [_AuthGuard(_profileRepo)]),
   ];

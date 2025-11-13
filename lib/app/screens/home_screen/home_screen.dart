@@ -142,7 +142,10 @@ class _State extends ConsumerState<HomeScreen> {
                         itemBuilder: (context, index) {
                           final postBundle = postBundles[index];
                           return Padding(
-                            padding: const EdgeInsetsGeometry.only(top: 10),
+                            padding: EdgeInsetsGeometry.only(
+                              top: 10,
+                              bottom: postBundles.length == index + 1 ? 140 : 0,
+                            ),
                             child: PostWidget(
                               post: postBundle.postModel,
                               profile: postBundle.profileModel,
@@ -165,19 +168,19 @@ class _State extends ConsumerState<HomeScreen> {
                                   ]);
                                   if (res == 'delete') {
                                     await _newPostsNotifier.deleteById(postBundle.postModel.id);
-                                    WidgetsBinding.instance.addPostFrameCallback((_) async {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
 
-                                          content: const Text("Post supprimé !"),
-                                          backgroundColor: const Color.fromARGB(255, 228, 15, 15),
-                                          duration: const Duration(seconds: 2),
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                        ),
-                                      );
-                                    });
+                                    if (!context.mounted) return;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
+
+                                        content: const Text("Post supprimé !"),
+                                        backgroundColor: const Color.fromARGB(255, 228, 15, 15),
+                                        duration: const Duration(seconds: 2),
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      ),
+                                    );
                                   }
                                   return;
                                 }
@@ -197,19 +200,19 @@ class _State extends ConsumerState<HomeScreen> {
 
                                 if (res == 'report') {
                                   await _newPostsNotifier.reportById(postBundle.postModel.id);
-                                  WidgetsBinding.instance.addPostFrameCallback((_) async {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
 
-                                        content: const Text("Post signalé !"),
-                                        backgroundColor: const Color.fromARGB(255, 228, 15, 15),
-                                        duration: const Duration(seconds: 2),
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      ),
-                                    );
-                                  });
+                                  if (!context.mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
+
+                                      content: const Text("Post signalé !"),
+                                      backgroundColor: const Color.fromARGB(255, 228, 15, 15),
+                                      duration: const Duration(seconds: 2),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    ),
+                                  );
                                 }
                               },
                             ),

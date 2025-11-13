@@ -15,7 +15,7 @@ final profileRepoProvider = Provider<ProfileRepository>((ref) {
 });
 
 class FirebaseProfileRepository implements ProfileRepository {
-  late final CollectionReference _profileCollection = FirebaseFirestore.instance.collection('profiles');
+  final collectionName = "profiles";
 
   @override
   Future<bool> isConnected() async {
@@ -29,12 +29,34 @@ class FirebaseProfileRepository implements ProfileRepository {
       return null;
     }
 
-    final profileData = (await _profileCollection.doc(authUser.uid).get()).data();
+    final profileData = (await FirebaseFirestore.instance.collection(collectionName).doc(authUser.uid).get()).data();
     if (profileData == null) {
       return null;
     }
 
-    return ProfileModel.fromJson((profileData as Map<String, dynamic>));
+    return ProfileModel.fromJson((profileData));
+  }
+
+  @override
+  Future<void> deleteCurrent() async {
+    final authUser = FirebaseAuth.instance.currentUser;
+    if (authUser == null) {
+      throw Exception("User not connected while trying to delete profile");
+    }
+
+    // * delete rpofile first.
+    final snapshot = await FirebaseFirestore.instance
+        .collection(collectionName)
+        .where("id", isEqualTo: authUser.uid)
+        .get();
+    final docs = snapshot.docs;
+    if (docs.isEmpty) {
+      throw FirebaseException(plugin: "firestore", message: "Le profil n'existe pas");
+    }
+    await FirebaseFirestore.instance.collection(collectionName).doc(authUser.uid).delete();
+
+    // * Then account
+    await authUser.delete();
   }
 
   @override
@@ -76,17 +98,17 @@ class FirebaseProfileRepository implements ProfileRepository {
       surname: surname,
       imageId: fileId,
     );
-    await _profileCollection.doc(authUser.uid).set(newProfile.toJson());
+    await FirebaseFirestore.instance.collection(collectionName).doc(authUser.uid).set(newProfile.toJson());
   }
 
   @override
   Future<ProfileModel?> findProfile(String id) async {
-    final profileData = (await _profileCollection.doc(id).get()).data();
+    final profileData = (await FirebaseFirestore.instance.collection(collectionName).doc(id).get()).data();
     if (profileData == null) {
       return null;
     }
 
-    return ProfileModel.fromJson((profileData as Map<String, dynamic>));
+    return ProfileModel.fromJson((profileData));
   }
 
   @override
@@ -107,7 +129,7 @@ class FirebaseProfileRepository implements ProfileRepository {
     }
 
     if (profileModel != null) {
-      await _profileCollection.doc(authUser.uid).set(profileModel.toJson());
+      await FirebaseFirestore.instance.collection(collectionName).doc(authUser.uid).set(profileModel.toJson());
     }
   }
 
@@ -123,7 +145,12 @@ class FirebaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> resetPassword(String password) async {
+  Future<void> resetPassword(String email) async {
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
+  @override
+  Future<void> updatePassword(String password) async {
     final authUser = FirebaseAuth.instance.currentUser;
     if (authUser == null) {
       throw Exception("User not connected while trying to reset password");

@@ -24,36 +24,32 @@ class _State extends ConsumerState<LoginScreen> {
 
     // * Ecouteur: Auth.
     ref.listen(loginNotifierProvider.selectAsync((state) => state.success), (previous, next) async {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        AutoRouter.of(context).replacePath('/home');
-      });
+      AutoRouter.of(context).replacePath('/home');
     });
 
     // * Ecouteur: Erreur Auth.
     ref.listen(loginNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
       final errorStack = await next;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showSimpleModal(context, "Oups…", errorStack.last);
-      });
+
+      if (!context.mounted) return;
+      showSimpleModal(context, "Oups…", errorStack.last);
     });
 
     // * Ecouteur: Password reset.
     ref.listen(resetPasswordNotifierProvider.selectAsync((state) => state.success), (previous, next) async {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showSimpleModal(
-          context,
-          "Vérifier votre boîte mail",
-          "Vous avez reçu un email afin de réinitialiser votre mot de passe.",
-        );
-      });
+      showSimpleModal(
+        context,
+        "Vérifier votre boîte mail",
+        "Vous avez reçu un email afin de réinitialiser votre mot de passe.",
+      );
     });
 
     // * Ecouteur: Password reset error.
     ref.listen(resetPasswordNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
       final errorStack = await next;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showSimpleModal(context, "Oups…", errorStack.last);
-      });
+
+      if (!context.mounted) return;
+      showSimpleModal(context, "Oups…", errorStack.last);
     });
 
     return Scaffold(

@@ -56,15 +56,34 @@ class UpdateProfileNotifier extends AsyncNotifier<UpdateSecurityState> {
       return;
     }
 
+    if (current.newPassword.length < 6) {
+      state = AsyncData(
+        current.copyWith(
+          errorStack: [...current.errorStack, 'Le nouveau mot de passe doit faire 6 caractères ou plus…'],
+        ),
+      );
+      return;
+    }
+
+    if (current.newPassword != current.newPasswordConfirm) {
+      state = AsyncData(
+        current.copyWith(errorStack: [...current.errorStack, "Le mot de passe de confirmation n'est pas correct…"]),
+      );
+      return;
+    }
+
     try {
       if (!await _profileRepository.checkPassword(current.password)) {
         state = AsyncData(current.copyWith(errorStack: [...current.errorStack, 'Mauvais mot de passe…']));
         return;
       }
 
+      await _profileRepository.updatePassword(current.newPassword);
       state = AsyncData(current.copyWith(success: current.success + 1));
     } on FirebaseAuthException catch (_) {
-      state = AsyncData(current.copyWith(errorStack: [...current.errorStack, 'Nom de compte ou mot de passe erroné…']));
+      state = AsyncData(
+        current.copyWith(errorStack: [...current.errorStack, 'Une erreur avec le serveur est survenue…']),
+      );
     } catch (e) {
       state = AsyncData(current.copyWith(errorStack: [...current.errorStack, 'Erreur interne…']));
     }

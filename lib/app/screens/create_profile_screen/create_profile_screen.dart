@@ -26,17 +26,16 @@ class _State extends ConsumerState<CreateProfileScreen> {
       final isCreated = await next;
       if (!isCreated) return;
 
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        AutoRouter.of(context).replacePath('/home');
-      });
+      if (!context.mounted) return;
+      AutoRouter.of(context).replacePath('/home');
     });
 
     // * Listener: erreur formulaire ou server.
     ref.listen(createProfileNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
       final errorStack = await next;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showSimpleModal(context, "Oops…", errorStack.last);
-      });
+
+      if (!context.mounted) return;
+      showSimpleModal(context, "Oops…", errorStack.last);
     });
 
     final filepath = ref.watch(createProfileNotifierProvider.select((state) => state.value?.filepath));

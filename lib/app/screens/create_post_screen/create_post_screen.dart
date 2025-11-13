@@ -24,27 +24,25 @@ class _State extends ConsumerState<CreatePostScreen> {
 
     // * Listener: validation création du post.
     ref.listen(createPostNotifierProvider.selectAsync((state) => state.isCreated), (previous, next) async {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Post publié !"),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 2),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            behavior: SnackBarBehavior.floating,
-            margin: const EdgeInsets.all(12),
-          ),
-        );
-        AutoRouter.of(context).replacePath('/home');
-      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Post publié !"),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 2),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(12),
+        ),
+      );
+      AutoRouter.of(context).replacePath('/home');
     });
 
     // * Listener: erreur formulaire ou server.
     ref.listen(createPostNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
       final errorStack = await next;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showSimpleModal(context, "Oops…", errorStack.last);
-      });
+
+      if (!context.mounted) return;
+      showSimpleModal(context, "Oops…", errorStack.last);
     });
 
     // * Watcher for each buttons (activated or not).

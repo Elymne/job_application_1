@@ -20,19 +20,17 @@ class _State extends ConsumerState<UpdateSecurityScreen> {
     final theme = Theme.of(context);
 
     ref.listen(updateSecurityNotifierProvider.selectAsync((state) => state.success), (previous, next) async {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await showSimpleModal(context, "Modification", "Votre mot de passe a bien été modifié");
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          AutoRouter.of(context).replacePath('/options');
-        });
-      });
+      await showSimpleModal(context, "Modification", "Votre mot de passe a bien été modifié");
+
+      if (!context.mounted) return;
+      AutoRouter.of(context).replacePath('/options');
     });
 
     ref.listen(updateSecurityNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
       final errorStack = await next;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showSimpleModal(context, "Oups…", errorStack.last);
-      });
+
+      if (!context.mounted) return;
+      showSimpleModal(context, "Oups…", errorStack.last);
     });
 
     return Scaffold(

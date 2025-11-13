@@ -22,24 +22,22 @@ class _State extends ConsumerState<CreateAccountScreen> {
 
     // * Listener: validation création du compte.
     ref.listen(createAccountNotifierProvider.selectAsync((state) => state.isCreated), (previous, next) async {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await showSimpleModal(
-          context,
-          "Vérifier votre boîte mail",
-          "Un email de vérification vous a été envoyé à votre adresse email",
-        );
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          AutoRouter.of(context).replacePath('/login');
-        });
-      });
+      await showSimpleModal(
+        context,
+        "Vérifier votre boîte mail",
+        "Un email de vérification vous a été envoyé à votre adresse email",
+      );
+
+      if (!context.mounted) return;
+      AutoRouter.of(context).replacePath('/login');
     });
 
     // * Listener: erreur formulaire ou server.
     ref.listen(createAccountNotifierProvider.selectAsync((state) => state.errorStack), (previous, next) async {
       final errorMessage = await next;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showSimpleModal(context, "Oops…", errorMessage.last);
-      });
+
+      if (!context.mounted) return;
+      showSimpleModal(context, "Oops…", errorMessage.last);
     });
 
     return Scaffold(

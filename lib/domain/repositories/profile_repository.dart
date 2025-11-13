@@ -10,6 +10,10 @@ abstract class ProfileRepository {
   /// return [ProfileModel] ou [Null]
   Future<ProfileModel?> getCurrent();
 
+  /// Supprime le profil + l'utilisateur courrant.
+  /// Nécessite d'être connecté à l'app.
+  Future<void> deleteCurrent();
+
   /// Tente de se log sur l'app.
   Future<void> login(String email, String pwd);
 
@@ -22,7 +26,11 @@ abstract class ProfileRepository {
 
   /// Modifie le mot de passe
   /// Nécessite que l'utilisateur soit déjà connecté.
-  Future<void> resetPassword(String password);
+  Future<void> resetPassword(String email);
+
+  /// Modifie le mot de passe
+  /// Nécessite que l'utilisateur soit déjà connecté.
+  Future<void> updatePassword(String password);
 
   /// Permet de créer un compte d'authentification.
   Future<void> addNewAccount(String email, String pwd);
