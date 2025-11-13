@@ -30,8 +30,11 @@ class _State extends ConsumerState<UpdateProfileScreen> {
     final theme = Theme.of(context);
 
     ref.listen(updateProfileNotifierProvider.selectAsync((state) => state.success), (previous, next) async {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        AutoRouter.of(context).replacePath('/options');
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await showSimpleModal(context, "Modification", "Votre profil a bien été modifié");
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          AutoRouter.of(context).replacePath('/options');
+        });
       });
     });
 
@@ -83,8 +86,6 @@ class _State extends ConsumerState<UpdateProfileScreen> {
                 padding: const EdgeInsetsGeometry.all(40),
                 child: Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-
                     // * Main Text *
                     Text(
                       'Infos Personnelles',

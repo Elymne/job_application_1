@@ -29,6 +29,7 @@ class AppRouter extends RootStackRouter {
     // * Options Screens.
     AutoRoute(path: '/options', page: OptionsRoute.page, guards: [_AuthGuard(_profileRepo)], initial: true),
     AutoRoute(path: '/options/profile', page: UpdateProfileRoute.page, guards: [_AuthGuard(_profileRepo)]),
+    AutoRoute(path: '/options/security', page: UpdateSecurityRoute.page, guards: [_AuthGuard(_profileRepo)]),
   ];
 
   @override

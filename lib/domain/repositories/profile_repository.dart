@@ -16,8 +16,13 @@ abstract class ProfileRepository {
   /// Se déconnecte, renvoie une exception si pas connecté ?
   Future<void> logout();
 
-  /// Reset le MDP.
-  Future<void> resetPassword(String email);
+  /// Vérifie que le mot de passe rentré est le correct.
+  /// Nécessite que l'utilisateur soit déjà connecté.
+  Future<bool> checkPassword(String password);
+
+  /// Modifie le mot de passe
+  /// Nécessite que l'utilisateur soit déjà connecté.
+  Future<void> resetPassword(String password);
 
   /// Permet de créer un compte d'authentification.
   Future<void> addNewAccount(String email, String pwd);

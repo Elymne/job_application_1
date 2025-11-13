@@ -52,12 +52,6 @@ class UpdateProfileNotifier extends AsyncNotifier<UpdateProfileState> {
       );
 
       await _profileRepository.updateProfile(profileModel: updatedProfile);
-      if (!await _profileRepository.isConnected()) {
-        state = AsyncData(
-          current.copyWith(errorStack: [...current.errorStack, "Une erreur s'est produite malgrés la connexion…"]),
-        );
-        return;
-      }
       state = AsyncData(current.copyWith(success: current.success + 1));
     } on FirebaseAuthException catch (_) {
       state = AsyncData(current.copyWith(errorStack: [...current.errorStack, 'Nom de compte ou mot de passe erroné…']));

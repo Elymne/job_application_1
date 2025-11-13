@@ -53,11 +53,6 @@ class FirebaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> resetPassword(String email) async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-  }
-
-  @override
   Future<void> createProfile(String surname, String firstname, File imageData) async {
     final authUser = FirebaseAuth.instance.currentUser;
     if (authUser == null) {
@@ -114,5 +109,26 @@ class FirebaseProfileRepository implements ProfileRepository {
     if (profileModel != null) {
       await _profileCollection.doc(authUser.uid).set(profileModel.toJson());
     }
+  }
+
+  @override
+  Future<bool> checkPassword(String password) async {
+    final authUser = FirebaseAuth.instance.currentUser;
+    if (authUser == null) {
+      return false;
+    }
+
+    final status = await FirebaseAuth.instance.validatePassword(FirebaseAuth.instance, password);
+    return status.isValid;
+  }
+
+  @override
+  Future<void> resetPassword(String password) async {
+    final authUser = FirebaseAuth.instance.currentUser;
+    if (authUser == null) {
+      throw Exception("User not connected while trying to reset password");
+    }
+
+    await authUser.updatePassword(password);
   }
 }
