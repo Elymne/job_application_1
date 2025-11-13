@@ -28,7 +28,7 @@ abstract class ProfileRepository {
 
   /// Modification d'un profil associé à l'utilisateur connecté.
   /// L'utilisateur doit donc-être connecté pour utiliser lors de l'utilisation de cette fonction.
-  Future<void> updateProfile(ProfileModel profileModel, File imageData);
+  Future<void> updateProfile({ProfileModel? profileModel, File? imageData});
 
   /// Récupération d'un profil via l'id.
   Future<ProfileModel?> findProfile(String id);

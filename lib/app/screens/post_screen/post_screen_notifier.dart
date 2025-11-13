@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naxan_test/app/screens/home_screen/new_posts_notifier.dart';
+import 'package:naxan_test/app/notifiers/new_posts_notifier.dart';
 import 'package:naxan_test/infra/firebase_post_repository.dart';
 import 'package:naxan_test/infra/firebase_profile_repository.dart';
 import 'dart:async';

@@ -95,12 +95,24 @@ class FirebaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> updateProfile(ProfileModel profileModel, File imageData) async {
+  Future<void> updateProfile({ProfileModel? profileModel, File? imageData}) async {
     final authUser = FirebaseAuth.instance.currentUser;
     if (authUser == null) {
       throw FirebaseAuthException(code: 'user-not-found');
     }
 
-    // TODO: le reste et surement un changement de signature de fonction.
+    if (imageData != null) {
+      final typeFile = imageData.path.split(".").last;
+      final fileId = "${const Uuid().v4()}.$typeFile";
+      final formData = FormData.fromMap({"image": await MultipartFile.fromFile(imageData.path, filename: fileId)});
+      final uploadRes = await Dio().post(serverImageScriptUrl, data: formData);
+      if (jsonDecode(uploadRes.data)["success"] == false) {
+        throw DioException(requestOptions: RequestOptions());
+      }
+    }
+
+    if (profileModel != null) {
+      await _profileCollection.doc(authUser.uid).set(profileModel.toJson());
+    }
   }
 }

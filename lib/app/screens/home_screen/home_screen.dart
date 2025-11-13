@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naxan_test/app/modals/modal_select.dart';
 import 'package:naxan_test/app/screens/home_screen/post_widget.dart';
-import 'package:naxan_test/app/screens/home_screen/current_profile_notifier.dart';
-import 'package:naxan_test/app/screens/home_screen/new_posts_notifier.dart';
+import 'package:naxan_test/app/notifiers/current_profile_notifier.dart';
+import 'package:naxan_test/app/notifiers/new_posts_notifier.dart';
 import 'package:naxan_test/core/constants.dart';
 
 @RoutePage()

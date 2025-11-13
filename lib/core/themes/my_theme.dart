@@ -7,9 +7,9 @@ final _colorScheme = ColorScheme.fromSeed(
   onPrimary: Colors.white,
 
   surface: const Color.fromARGB(255, 255, 255, 255),
-  surfaceContainerLow: const Color.fromARGB(255, 243, 243, 243),
   onSurface: const Color.fromARGB(255, 65, 65, 65),
-  onSurfaceVariant: const Color.fromARGB(255, 173, 173, 173),
+  surfaceContainerLow: const Color.fromARGB(255, 248, 248, 248),
+  onSurfaceVariant: const Color.fromARGB(255, 189, 189, 189),
 
   brightness: Brightness.light,
 );
@@ -26,9 +26,9 @@ final appTheme = ThemeData(
       letterSpacing: -0.6,
       color: _colorScheme.primary,
     ),
-    // * Sous-titre (Screen).
+    // * Sous-titre (modules ou sous partie).
     displaySmall: TextStyle(
-      fontSize: 28,
+      fontSize: 24,
       fontWeight: FontWeight.bold,
       letterSpacing: -0.6,
       color: _colorScheme.primary,
@@ -46,7 +46,7 @@ final appTheme = ThemeData(
     labelMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: _colorScheme.primary),
 
     // * [Basic][Card] All data bloc text.
-    bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: _colorScheme.surface),
+    bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: _colorScheme.onSurface),
     bodyMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: _colorScheme.onSurfaceVariant),
 
     // * [Modal] main text.

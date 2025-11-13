@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naxan_test/app/screens/home_screen/current_profile_notifier.dart';
+import 'package:naxan_test/app/notifiers/current_profile_notifier.dart';
 import 'package:naxan_test/app/screens/options_screen/option_item.dart';
 import 'package:naxan_test/core/constants.dart';
 
@@ -27,7 +27,6 @@ class _State extends ConsumerState<OptionsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final currentProfilAsync = ref.watch(currentProfileNotifierProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -49,15 +48,15 @@ class _State extends ConsumerState<OptionsScreen> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: Image(
-                            image: NetworkImage("$serverImagesUrl/${currentProfilAsync.value!.imageId}"),
+                            image: NetworkImage("$serverImagesUrl/${data.imageId}"),
                             width: 100,
                             height: 100,
                             fit: BoxFit.cover,
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text("${data.firstname} ${data.surname}", style: theme.textTheme.headlineLarge),
-                        Text(data.email, style: theme.textTheme.bodyMedium),
+                        Text("${data.firstname} ${data.surname}", style: theme.textTheme.displayMedium),
+                        Text(data.email, style: theme.textTheme.headlineMedium),
                         const SizedBox(height: 10),
 
                         // * Divider.
@@ -67,13 +66,13 @@ class _State extends ConsumerState<OptionsScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Mon compte", style: theme.textTheme.headlineLarge),
+                            Text("Mon compte", style: theme.textTheme.displaySmall),
                             const SizedBox(height: 10),
                             OptionItem(
                               prefix: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
                                 child: Image(
-                                  image: NetworkImage("$serverImagesUrl/${currentProfilAsync.value!.imageId}"),
+                                  image: NetworkImage("$serverImagesUrl/${data.imageId}"),
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.cover,
@@ -85,8 +84,8 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
-                                print("OPTIONS MON GATé");
+                              onTap: () {
+                                AutoRouter.of(context).pushPath("/options/profile");
                               },
                             ),
                             const SizedBox(height: 10),
@@ -106,13 +105,13 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
                             const SizedBox(height: 20),
 
-                            Text("Paramètres", style: theme.textTheme.headlineLarge),
+                            Text("Paramètres", style: theme.textTheme.displaySmall),
                             const SizedBox(height: 10),
 
                             OptionItem(
@@ -130,13 +129,13 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
                             const SizedBox(height: 20),
 
-                            Text("Autres", style: theme.textTheme.headlineLarge),
+                            Text("Autres", style: theme.textTheme.displaySmall),
                             const SizedBox(height: 10),
 
                             OptionItem(
@@ -154,7 +153,7 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
@@ -175,13 +174,13 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
                             const SizedBox(height: 20),
 
-                            Text("Liens", style: theme.textTheme.headlineLarge),
+                            Text("Liens", style: theme.textTheme.displaySmall),
                             const SizedBox(height: 10),
 
                             OptionItem(
@@ -190,7 +189,7 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
@@ -202,7 +201,7 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
@@ -214,7 +213,7 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
@@ -226,13 +225,13 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
                             const SizedBox(height: 20),
 
-                            Text("Réseaux sociaux", style: theme.textTheme.headlineLarge),
+                            Text("Réseaux sociaux", style: theme.textTheme.displaySmall),
                             const SizedBox(height: 10),
 
                             OptionItem(
@@ -249,7 +248,7 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
@@ -269,7 +268,7 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
@@ -286,7 +285,7 @@ class _State extends ConsumerState<OptionsScreen> {
                               ),
                               firstText: "Notre page facebook",
                               sufixe: const Icon(Icons.h_mobiledata, color: Color.fromARGB(255, 165, 165, 165)),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
@@ -306,7 +305,7 @@ class _State extends ConsumerState<OptionsScreen> {
                                 Icons.arrow_forward_ios_sharp,
                                 color: Color.fromARGB(255, 165, 165, 165),
                               ),
-                              onClick: () {
+                              onTap: () {
                                 print("OPTIONS MON GATé");
                               },
                             ),
