@@ -168,7 +168,7 @@ class _State extends ConsumerState<OptionsScreen> {
                           ),
                           firstText: "Notifications push",
                           lastText: "Activées",
-                          sufixe: const Icon(Icons.arrow_forward_ios_sharp, color: Color.fromARGB(255, 165, 165, 165)),
+                          sufixe: Checkbox(onChanged: (value) {}, value: true),
                         ),
                         const SizedBox(height: 20),
 
